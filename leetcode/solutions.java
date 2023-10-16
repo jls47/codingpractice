@@ -83,4 +83,24 @@ public class solutions {
             longer[1] = (x + y  + longer[1]) / 10;
         }
     }
+
+    /*
+	Repeated substring pattern
+	Given a string s, check if it can be constructed by taking a substring and
+	repeating it a bunch of times
+    */
+
+    public boolean repeatedSubstringPattern(String s) {
+        
+        for(int i = 1; i <= s.length() / 2; i++) {
+            if(s.length() % i == 0) {
+                String[] x = s.split(s.substring(0, i));
+                if(x.length == 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
