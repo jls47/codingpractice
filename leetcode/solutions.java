@@ -155,4 +155,32 @@ public class solutions {
         return longestSeq;
 
     }
+
+    /*
+	Rotate array.
+	Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+    */
+
+    public void rotate(int[] nums, int k) {
+        if(nums.length > 2 && nums.length != k) {
+            int[] x = new int[nums.length];
+            for(int i = 0; i < k % nums.length; i++) {
+                x[i] = nums[nums.length - (k % nums.length) + i];
+            }
+
+            for(int i = 0; i < nums.length - (k % nums.length); i++) {
+                x[i + (k % nums.length)] = nums[i];
+            }
+
+            for(int i = 0; i < nums.length; i++) {
+                nums[i] = x[i];
+            }
+        } else if(nums.length == 2) {
+            if(k % 2 == 1) {
+                int x = nums[0];
+                nums[0] = nums[1];
+                nums[1] = x;
+            }
+        }
+    }
 }
