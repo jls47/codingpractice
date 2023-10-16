@@ -103,4 +103,56 @@ public class solutions {
 
         return false;
     }
+
+    /*
+	Longest consecutive subsequence
+	Given an unsorted array of integers nums, return the length of the longest consecutive elements
+	sequence.
+	Runs in O(n) but saves a whole bunch of memory compared to most.
+    */
+
+    public int longestConsecutive(int[] nums) {
+        if(nums.length <= 1) {
+            return nums.length;
+        } else if(nums.length == 2) {
+            if(Math.abs(nums[1] - nums[0]) == 1) {
+                return 2;
+            }
+            return 1;
+        }
+
+
+
+        Map<Integer, Integer> nodes = new TreeMap<Integer, Integer>();
+
+        for(int i = 0; i < nums.length; i++) {
+            if(nodes.get(nums[i]) == null) {
+                nodes.put(nums[i], 0);
+            }
+        }
+        List<Integer> keys = new ArrayList<Integer>(nodes.keySet());
+
+
+        int currentSeq = 1;
+        int longestSeq = 1;
+
+        for(int i = 1; i < keys.size(); i++) {
+            if(keys.get(i) - keys.get(i - 1) == 1) {
+                currentSeq ++;
+            } else {
+                if(currentSeq > longestSeq) {
+                    longestSeq = currentSeq;
+                }
+                currentSeq = 1;
+            }
+        }
+
+                if(currentSeq > longestSeq) {
+                    longestSeq = currentSeq;
+                }
+
+
+        return longestSeq;
+
+    }
 }
