@@ -221,5 +221,39 @@ public class solutions {
         return false;
     }
 
-    
+    /*
+	Majority element.  Easy enough one.
+	Find the element that occurs the most.
+    */
+    //use map to track occurrences
+    //pointers on either side
+    public int majorityElement(int[] nums) {
+        if(nums.length <= 2) {
+            return nums[0];
+        }
+        Map<Integer, Integer> ocs = new HashMap<Integer, Integer>();
+
+        for(int i = 0; i < (nums.length / 2) + (nums.length % 2); i++) {
+            if(ocs.get(nums[i]) == null) {
+                ocs.put(nums[i], 1);
+            } else {
+                ocs.put(nums[i], ocs.get(nums[i]) + 1);
+                if(ocs.get(nums[i]) > nums.length / 2) {
+                    return nums[i];
+                }
+            }
+
+            if(ocs.get(nums[nums.length - i - 1]) == null) {
+                ocs.put(nums[nums.length - i - 1], 1);
+            } else {
+                ocs.put(nums[nums.length - i - 1], ocs.get(nums[nums.length - i - 1]) + 1);
+                if(ocs.get(nums[nums.length - i - 1]) > nums.length / 2) {
+                    return nums[nums.length - i - 1];
+                }
+            }
+        }
+
+        return -1;
+
+    }
 }
