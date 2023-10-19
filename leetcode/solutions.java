@@ -257,3 +257,39 @@ public class solutions {
 
     }
 }
+
+/*
+Insert Delete GetRandom O(1)
+Nice little class implementation test.
+*/
+
+class RandomizedSet {
+
+    public RandomizedSet() {
+        x = new HashMap<Integer, Integer>();
+    }
+    
+    public boolean insert(int val) {
+        return x.put(val, 1) == null;
+    }
+    
+    public boolean remove(int val) {
+        return x.remove(val) != null;
+    }
+    
+    public int getRandom() {
+        List<Integer> z = new ArrayList<Integer>(x.keySet());
+        int y = (int)(Math.random() * (double)z.size());
+        return z.get(y);
+    }
+
+    private Map<Integer, Integer> x;
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
