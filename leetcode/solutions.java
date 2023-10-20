@@ -256,6 +256,41 @@ public class solutions {
         return -1;
 
     }
+
+    /*
+	"Jump Game", not a huge fan of the titles in leetcode
+	See if you can jump from the beginning to end over different arrays.
+	Each int at index[n] is how far you could possibly jump.
+    */
+    //recursive solution.  Recursive calls in a loop going down
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1) {
+            return true;
+        }
+        if(nums.length == 2) {
+            return nums[0] >= 1;
+        }
+        return findPath(nums, nums.length - 1);
+    }
+
+    private boolean findPath(int[] nums, int index) {
+        if(index == 0) {
+            return true;
+        }
+        int distance = 1;
+        boolean found = false;
+        for(int i = index - 1; i >= 0; i--) {
+            if(nums[i] >= distance) {
+                found = true;
+                break;
+            }
+            distance ++;
+        }
+        if(found) {
+            return findPath(nums, index - distance);
+        }
+        return false;
+    }
 }
 
 /*
