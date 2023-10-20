@@ -291,6 +291,28 @@ public class solutions {
         }
         return false;
     }
+
+    /*
+	h-index.  Pretty simple one.
+	Given an array of integers citations where citations[i] 
+	is the number of citations a researcher received for their ith paper, return the researcher's h-index.
+    */
+
+    //sort then work backwards
+    //
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+
+        int x = 0;
+
+        for(int i = citations.length - 1; i >= 0; i--) {
+            if(citations[i] <= x) {
+                break;
+            }
+            x ++;
+        }
+        return x;
+    }
 }
 
 /*
