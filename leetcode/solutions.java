@@ -313,6 +313,41 @@ public class solutions {
         }
         return x;
     }
+
+    /*
+    Check if array is sorted and rotated
+    */
+
+    //is everything in the first portion of the array bigger than the last portion of the array?  
+    //Keep track of min in first portion, if anything bigger than min return false
+    public boolean check(int[] nums) {
+
+        if(nums.length == 1 || nums.length == 2) {
+            return true;
+        }
+
+        int min = nums[0];
+        int half = 1;
+
+        for(int i = 1; i < nums.length; i++) {
+            if(half == 2) {
+                if(nums[i] > min || nums[i] < nums[i - 1]) {
+                    return false;
+                }
+            } else if(nums[i] < nums[i - 1]) {
+                if(nums[i] > min) {
+                    return false;
+                }
+                    half = 2;
+            } else {
+                if(nums[i] < min) {
+                    min = nums[i];
+                }
+            }
+        }
+
+        return true;
+    }
 }
 
 /*
