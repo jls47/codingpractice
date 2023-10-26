@@ -348,6 +348,8 @@ public class solutions {
 
         return true;
     }
+
+
 }
 
 /*
@@ -385,3 +387,58 @@ class RandomizedSet {
  * boolean param_2 = obj.remove(val);
  * int param_3 = obj.getRandom();
  */
+
+
+/*
+Spiral Matrix II
+Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+
+Look, an actual opportunity to use OOP!
+*/
+class Direction {
+    public String next = "";
+    public int x = 0;
+    public int y = 0;
+
+    public Direction(String s, int d1, int d2) {
+        next = s;
+        y = d1;
+        x = d2;
+    }
+}
+
+class Solution {
+    //Use map for addition directions
+    //And switching - map of arrs
+    //Keep track of place by seeing if you're
+    //at n^2 yet
+
+    public int[][] generateMatrix(int n) {
+        int[][] mat = new int[n][n];
+        Map<String, Direction> dirs = new HashMap<String, Direction>();
+        dirs.put("right", new Direction("down", 0, 1));
+        dirs.put("down", new Direction("left", 1, 0));
+        dirs.put("left", new Direction("up", 0, -1));
+        dirs.put("up", new Direction("right", -1, 0));
+        Direction current = dirs.get("right");
+        int cx = 0;
+        int cy = 0;
+
+        for(int i = 1; i <= (n * n); i++) {
+            mat[cy][cx] = i;
+            if(
+                cy + current.y >= n ||
+                cy + current.y < 0 ||
+                cx + current.x >= n || 
+                cx + current.x < 0 ||
+                mat[cy + current.y][cx + current.x] != 0
+            ) {
+                current = dirs.get(current.next);
+            }
+            cy += current.y;
+            cx += current.x;
+
+        }
+        return mat;
+    }
+}
