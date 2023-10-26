@@ -350,6 +350,62 @@ public class solutions {
     }
 
 
+
+    /*
+    Set Matrix Zeroes
+    Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+    */
+
+    //First pass: find zeroes
+    //Then, iterate over list of coords and zero out appropriately
+    public void setZeroes(int[][] matrix) {
+        if(matrix.length == 1 && matrix[0].length == 1) {
+            return;
+        }
+        List<List<Integer>> spots = new ArrayList<List<Integer>>();
+
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[0].length; j++) {
+                if(matrix[i][j] == 0) {
+                    List<Integer> x = new ArrayList<Integer>();
+                    x.add(i);
+                    x.add(j);
+                    spots.add(x);
+                }
+            }
+        }
+
+        for(int i = 0; i < spots.size(); i++) {
+            setZeroes(matrix, spots.get(i).get(1), spots.get(i).get(0));
+        }
+    }
+
+    private void setZeroes(int[][] matrix, int startX, int startY) {
+        int x1 = startX + 1;
+        int x2 = startX - 1;
+        int y1 = startY + 1;
+        int y2 = startY - 1;
+        while(x1 < matrix[0].length || x2 >= 0 || y1 < matrix.length || y2 >= 0) {
+            if(x1 < matrix[0].length) {
+                matrix[startY][x1] = 0;
+                x1 ++;
+            }
+            if(x2 >= 0) {
+                matrix[startY][x2] = 0;
+                x2 --;
+            }
+            if(y1 < matrix.length) {
+                matrix[y1][startX] = 0;
+                y1 ++;
+            }
+            if(y2 >= 0) {
+                matrix[y2][startX] = 0;
+                y2 --;
+            }
+        }
+    }
+
+
 }
 
 /*
@@ -387,6 +443,60 @@ class RandomizedSet {
  * boolean param_2 = obj.remove(val);
  * int param_3 = obj.getRandom();
  */
+
+
+/*
+Spiral Matrix I
+Given an m x n matrix, return all elements of the matrix in spiral order.
+*/
+
+
+class Direction {
+    public String next = "";
+    public int x = 0;
+    public int y = 0;
+
+    public Direction(String s, int d1, int d2) {
+        next = s;
+        y = d1;
+        x = d2;
+    }
+}   
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int n = matrix.length;
+        List<Integer> mat = new ArrayList<Integer>();
+        Map<String, Direction> dirs = new HashMap<String, Direction>();
+        dirs.put("right", new Direction("down", 0, 1));
+        dirs.put("down", new Direction("left", 1, 0));
+        dirs.put("left", new Direction("up", 0, -1));
+        dirs.put("up", new Direction("right", -1, 0));
+        Direction current = dirs.get("right");
+        int cx = 0;
+        int cy = 0;
+        
+        for(int i = 1; i <= (matrix.length * matrix[0].length); i++) {
+            mat.add(matrix[cy][cx]);
+            matrix[cy][cx] = -101;
+            if(
+                cy + current.y >= matrix.length ||
+                cy + current.y < 0 ||
+                cx + current.x >= matrix[0].length || 
+                cx + current.x < 0 ||
+                matrix[cy + current.y][cx + current.x] == -101
+            ) {
+                System.out.println(cy + current.y);
+                System.out.println(cx + current.x);
+                current = dirs.get(current.next);
+            }
+            cy += current.y;
+            cx += current.x;
+
+        }
+        return mat;
+    }
+}
 
 
 /*
