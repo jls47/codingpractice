@@ -405,6 +405,72 @@ public class solutions {
         }
     }
 
+    /*
+    Word search: find a word in a 2d array that flows in any direction.
+    Good memoization/recursion exericse.
+    */
+
+    //First pass: look for starting letters, add to list of coords
+    public boolean exist(char[][] board, String word) {
+        
+        List<List<Integer>> coords = new ArrayList<List<Integer>>();
+        char c = word.charAt(0);
+
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                if(board[i][j] == c) {
+                    List<Integer> x = new ArrayList<Integer>();
+                    x.add(j);
+                    x.add(i);
+                    coords.add(x);
+                }
+            }
+        }
+        System.out.println(word.length());
+        for(int i = 0; i < coords.size(); i++) {
+            boolean[][] visited = new boolean[board.length][board[0].length];
+            if(findWord(board, word, 0, coords.get(i).get(0), coords.get(i).get(1), visited)) {
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    //memoize.  Remember where you're going.
+    private boolean findWord(char[][] board, String word, int index, int x, int y, boolean[][] visited) {
+        if(x < 0 || x >= board[0].length || y < 0 || y >= board.length || visited[y][x]) {
+            return false;
+        }
+        if(board[y][x] != word.charAt(index)) {
+            return false;
+        }
+        if(index == word.length() - 1) {
+            return true;
+        }
+
+        visited[y][x] = true;
+
+        if(findWord(board, word, index + 1, x + 1, y, visited)) {
+            return true;
+        }
+
+        if(findWord(board, word, index + 1, x - 1, y, visited)) {
+            return true;
+        }
+
+        if(findWord(board, word, index + 1, x, y + 1, visited)) {
+            return true;
+        }
+        
+        if(findWord(board, word, index + 1, x, y - 1, visited)) {
+            return true;
+        }
+
+        visited[y][x] = false;
+
+        return false;
+    }
+
 
 }
 
