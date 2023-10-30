@@ -471,6 +471,68 @@ public class solutions {
         return false;
     }
 
+    /*
+    Find first and last position of element in sorted array
+    Binary search then find points where begin and end
+    */
+
+    public int[] searchRange(int[] nums, int target) {
+        int[] bounds = new int[]{-1, -1};
+        if(nums.length == 0) {
+            return bounds;
+        } else if(nums.length == 1) {
+            if(nums[0] == target) {
+                bounds[0] = 0;
+                bounds[1] = 0;
+            }
+            return bounds;
+        }
+        int index = binSearch(nums, target, 0, nums.length - 1);
+        bounds[0] = index;
+        bounds[1] = index;
+        findLim(nums, index + 1, target, 1, bounds, 1);
+        findLim(nums, index - 1, target, -1, bounds, 0);
+        return bounds;
+    }
+
+    private int binSearch(int[] nums, int target, int min, int max) {
+        if(Math.abs(min - max) == 1) {
+            System.out.println(min);
+            if(nums[min] == target) {
+                return min;
+            } else if(nums[max] == target) {
+                return max;
+            }
+            return -1;
+        }
+
+        if(nums[min] == target) {
+            return min;
+        } else if(nums[max] == target) {
+            return max;
+        } else if(nums[(max + min) / 2] == target) {
+            return (max + min) / 2;
+        } 
+
+        if(nums[(max + min) / 2] < target) {
+            min = (max + min) / 2;
+        } else {
+            max = (max + min) / 2;
+        }
+
+        return binSearch(nums, target, min, max);
+    }
+
+    private void findLim(int[] nums, int start, int targ, int inc, int[] bounds, int ind) {
+        if(start < 0 || start >= nums.length) {
+            return;
+        }
+        if(nums[start] == targ) {
+            bounds[ind] = start;
+            findLim(nums, start + inc, targ, inc, bounds, ind);
+        }
+    }
+
 
 }
 
