@@ -534,6 +534,41 @@ public class solutions {
     }
 
 
+    /*
+    Letter Case Permutation
+    Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
+
+    Return a list of all possible strings we could create. Return the output in any order.
+    */
+    public List<String> letterCasePermutation(String s) {
+        List<String> perms = new ArrayList<String>();
+        Map<Character, Integer> letters = new HashMap<Character, Integer>();
+        for(char c = 'a'; c <= 'z'; c++) {
+            letters.put(c, 1);
+        }
+        for(char c = 'A'; c <= 'Z'; c++) {
+            letters.put(c, 1);
+        }
+        findPerms(perms, s, 0, letters);
+        return perms;
+    }
+
+    private void findPerms(List<String> perms, String s, int index, Map<Character, Integer> letters) {
+        if(index == s.length()) {
+            perms.add(s);
+            return;
+        }
+        if(letters.get(s.charAt(index)) != null) {
+            char c = s.charAt(index);
+            String upper = s.substring(0, index) + Character.toUpperCase(c) + s.substring(index + 1, s.length());
+            findPerms(perms, upper, index + 1, letters);
+            String lower = s.substring(0, index) + Character.toLowerCase(c) + s.substring(index + 1, s.length());
+            findPerms(perms, lower, index + 1, letters);
+        } else {
+            findPerms(perms, s, index + 1, letters);
+        }
+    }
+
 }
 
 /*
