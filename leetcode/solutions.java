@@ -569,6 +569,35 @@ public class solutions {
         }
     }
 
+    /*
+    Find Largest Value in Each Tree Row
+    Brute force.  Use a map, track vals at depths.
+    */
+
+    public List<Integer> largestValues(TreeNode root) {
+        Map<Integer, Integer> rowMax = new TreeMap<Integer, Integer>();
+        findMax(root, rowMax, 0);
+        List<Integer> maxes = new ArrayList<Integer>();
+        for(Integer x : rowMax.keySet()) {
+            maxes.add(rowMax.get(x));
+        }
+        return maxes;
+    }
+
+    private void findMax(TreeNode cur, Map<Integer, Integer> maxes, int level) {
+        if(cur == null) {
+            return;
+        }
+        if(maxes.get(level) == null) {
+            maxes.put(level, cur.val);
+        }
+        if(maxes.get(level) < cur.val) {
+            maxes.put(level, cur.val);
+        }
+        findMax(cur.left, maxes, level + 1);
+        findMax(cur.right, maxes, level + 1);
+    }
+
 }
 
 /*
