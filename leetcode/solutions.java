@@ -598,6 +598,38 @@ public class solutions {
         findMax(cur.right, maxes, level + 1);
     }
 
+    /*
+    Flatten Binary Tree into Linked List
+    Given the root of a binary tree, flatten the tree into a "linked list":
+
+    The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.
+    The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+
+    */
+
+    //Grab everything from left, put it in right, go to end of new right and add old right
+    public void flatten(TreeNode root) {
+        if(root != null) {
+            TreeNode x = root;
+            while(x.left != null || x.right != null) {
+                TreeNode y = x.right;
+                x.right = x.left;
+                x.left = null;
+                if(y != null) {
+                    plantRight(x, y);
+                }
+                x = x.right;
+            }
+        }
+    }
+
+    private void plantRight(TreeNode root, TreeNode toPlant) {
+        while(root.right != null) {
+            root = root.right;
+        }
+        root.right = toPlant;
+    }
+
 }
 
 /*
