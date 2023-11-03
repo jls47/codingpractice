@@ -630,6 +630,35 @@ public class solutions {
         root.right = toPlant;
     }
 
+
+/*
+Validate Binary Search Tree
+Just make sure a given tree is a valid BST.  In order traversal is pretty much made for this.
+*/
+
+ //I'm overthinking this.  The only thing to check is if an in-order traversal produces a 
+ //continually increasing list.
+    public boolean isValidBST(TreeNode root) {
+        int[] lastN = new int[1];
+        lastN[0] = Integer.MIN_VALUE;
+        List<Integer> x = new ArrayList<Integer>();
+        return inOrder(root, x);
+    }
+
+    private boolean inOrder(TreeNode root, List<Integer> x) {
+        if(root == null) {
+            return true;
+        }
+        if(!inOrder(root.left, x)) {
+            return false;
+        }
+        if(x.size() > 0 && root.val <= x.get(x.size() - 1)) {
+            return false;
+        }
+        x.add(root.val);
+        return inOrder(root.right, x);
+    }
+
 }
 
 /*
