@@ -659,6 +659,45 @@ Just make sure a given tree is a valid BST.  In order traversal is pretty much m
         return inOrder(root.right, x);
     }
 
+    /*
+    Swap kth node with kth from end node value in linked list
+    */
+
+    public ListNode swapNodes(ListNode head, int k) {
+        int x = 1;
+        ListNode cur = head;
+        if(k >= 1) {
+            while(x < k) {
+                cur = cur.next;
+                x++;
+            }
+            ListNode start = head;
+            swapKth(start, cur, k);
+        }
+
+        return head;
+    }
+
+    private int swapKth(ListNode cur, ListNode toSwap, int k) {
+        if(cur.next == null) {
+            if(k == 1) {
+                int x = cur.val;
+                cur.val = toSwap.val;
+                toSwap.val = x;
+            }
+            return 2;
+        } else {
+            int z = swapKth(cur.next, toSwap, k);
+            if((z == k)) {
+                int x = cur.val;
+                cur.val = toSwap.val;
+                toSwap.val = x;
+            }
+            return z + 1;
+        }
+
+    }
+
 }
 
 /*
