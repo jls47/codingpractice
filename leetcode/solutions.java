@@ -717,6 +717,37 @@ Just make sure a given tree is a valid BST.  In order traversal is pretty much m
         return -1;
     }
 
+    /*
+    Clone graph - return a deep clone of the graph passed in via the head node.
+    */
+
+     public Node cloneGraph(Node node) {
+        if(node == null) {
+            return node;
+        }
+        Node newNode = new Node(node.val);
+        Map<Integer, Node> visited = new HashMap<Integer, Node>();
+        makeClone(node, newNode, visited);
+        return newNode;
+    }
+
+    private void makeClone(Node oldNode, Node newNode, Map<Integer, Node> visited) {
+        if(oldNode != null && visited.get(oldNode.val) == null) {
+            visited.put(oldNode.val, newNode);
+            List<Node> newNeighbors = new ArrayList<Node>();
+            for(int i = 0; i < oldNode.neighbors.size(); i++) {
+                Node neighbor = new Node(oldNode.neighbors.get(i).val);
+                if(visited.get(neighbor.val) != null) {
+                    newNeighbors.add(visited.get(neighbor.val));
+                } else {
+                    newNeighbors.add(neighbor);
+                }
+                makeClone(oldNode.neighbors.get(i), newNeighbors.get(i), visited);
+            }
+            newNode.neighbors = newNeighbors;
+        } 
+    }
+
 }
 
 /*
