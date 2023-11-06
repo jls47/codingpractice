@@ -698,6 +698,25 @@ Just make sure a given tree is a valid BST.  In order traversal is pretty much m
 
     }
 
+    /*
+    Finding the center of a star graph.  Easy.
+    */
+    //Just find the first edge that recurs twice
+    public int findCenter(int[][] edges) {
+        Map<Integer, Integer> foundEdges = new HashMap<Integer, Integer>();
+        for(int i = 0; i < edges.length; i++) {
+            if(foundEdges.get(edges[i][0]) != null) {
+                return edges[i][0];
+            }
+            if(foundEdges.get(edges[i][1]) != null) {
+                return edges[i][1];
+            }
+            foundEdges.put(edges[i][1], 1);
+            foundEdges.put(edges[i][0], 1);
+        }
+        return -1;
+    }
+
 }
 
 /*
