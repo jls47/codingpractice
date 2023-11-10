@@ -748,6 +748,70 @@ Just make sure a given tree is a valid BST.  In order traversal is pretty much m
         } 
     }
 
+    /*
+    
+    Roman numeral to integer converter.  brute force.
+
+    */
+
+    public int romanToInt(String s) {
+        int sum = 0;
+        while(s.contains("CM")) {
+            sum += 900;
+            s = s.replaceFirst("CM", "");
+        }
+        while(s.contains("CD")) {
+            sum += 400;
+            s = s.replaceFirst("CD", "");
+        }
+        while(s.contains("XC")) {
+            sum += 90;
+            s = s.replaceFirst("XC", "");
+        }
+        while(s.contains("XL")) {
+            sum += 40;
+            s = s.replaceFirst("XL", "");
+        }
+        while(s.contains("IX")) {
+            sum += 9;
+            s = s.replaceFirst("IX", "");
+        }
+        while(s.contains("IV")) {
+            sum += 4;
+            s = s.replaceFirst("IV", "");
+        }
+
+        while(s.contains("M")) {
+            sum += 1000;
+            s = s.replaceFirst("M", "");
+        }
+        while(s.contains("D")) {
+            sum += 500;
+            s = s.replaceFirst("D", "");
+        }
+        while(s.contains("C")) {
+            sum += 100;
+            s = s.replaceFirst("C", "");
+        }
+        while(s.contains("L")) {
+            sum += 50;
+            s = s.replaceFirst("L", "");
+        }
+        while(s.contains("X")) {
+            sum += 10;
+            s = s.replaceFirst("X", "");
+        }
+        while(s.contains("V")) {
+            sum += 5;
+            s = s.replaceFirst("V", "");
+        }
+        while(s.contains("I")) {
+            sum += 1;
+            s = s.replaceFirst("I", "");
+        }
+        return sum;
+    }
+
 }
 
 /*
