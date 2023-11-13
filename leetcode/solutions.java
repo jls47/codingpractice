@@ -1040,3 +1040,40 @@ class MyStack {
  * int param_3 = obj.top();
  * boolean param_4 = obj.empty();
  */
+
+
+
+/*
+BST Iterator:
+Serialize BST, add iteration functionality
+*/
+
+
+class BSTIterator {
+
+    List<Integer> tree;
+    int currentIndex;
+
+    public BSTIterator(TreeNode root) {
+        currentIndex = 0;
+        tree = new ArrayList<Integer>();
+        traverse(root);
+    }
+
+    private void traverse(TreeNode cur) {
+        if(cur != null) {
+            traverse(cur.left);
+            tree.add(cur.val);
+            traverse(cur.right);
+        }
+    }
+    
+    public int next() {
+        currentIndex ++;
+        return tree.get(currentIndex - 1);
+    }
+    
+    public boolean hasNext() {
+        return (currentIndex < tree.size());
+    }
+}
