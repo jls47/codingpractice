@@ -812,6 +812,46 @@ Just make sure a given tree is a valid BST.  In order traversal is pretty much m
         return sum;
     }
 
+    /*
+    Quick sort implementation
+    */
+
+    public void sortColors(int[] nums) {
+        quickSort(nums, 0, nums.length - 1);
+    }
+
+    private void quickSort(int[] nums, int start, int end) {
+        if(start == end || start > end) {
+            return;
+        }
+        
+        int part = partition(nums, start, end);
+        
+        quickSort(nums, start, part - 1);
+        quickSort(nums, part + 1, end);
+    }
+
+    private int partition(int[] nums, int begin, int end) {
+        int i = (begin-1);
+        int swapTemp = 0;
+
+        for (int j = begin; j < end; j++) {
+            if (nums[j] <= nums[end]) {
+                i++;
+
+                swapTemp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = swapTemp;
+            }
+        }
+
+        swapTemp = nums[i+1];
+        nums[i+1] = nums[end];
+        nums[end] = swapTemp;
+
+        return i+1;
+    }
+
 }
 
 /*
