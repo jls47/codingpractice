@@ -1077,3 +1077,55 @@ class BSTIterator {
         return (currentIndex < tree.size());
     }
 }
+
+
+/*
+Find Kth-frequent words
+Uses a custom pair class, a priority queue, and an implementation of the comparator class.
+Time efficient, but not memory efficient.  Oh well!
+*/
+
+class WordPair {
+    public String word;
+    public int freq;
+}
+
+class PairComp implements Comparator<WordPair> {
+    public int compare(WordPair w1, WordPair w2) {
+        if(w1.freq == w2.freq) {
+            return w1.word.compareTo(w2.word);
+        }
+        return w2.freq - w1.freq;
+    }
+}
+
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        List<String> topFrequent = new ArrayList<String>();
+        Map<String, Integer> freqs = new HashMap<String, Integer>();
+
+        for(int i = 0; i < words.length; i++) {
+            if(freqs.get(words[i]) == null) {
+                freqs.put(words[i], 0);
+            }
+            freqs.put(words[i], freqs.get(words[i]) + 1);
+        }
+
+        PriorityQueue<WordPair> topK = new PriorityQueue<WordPair>(new PairComp());
+
+        for(String key : freqs.keySet()) {
+            WordPair wp = new WordPair();
+            wp.word = key;
+            wp.freq = freqs.get(key);
+            topK.add(wp);
+        }
+
+        for(int i = 0; i < k; i++) {
+            topFrequent.add(topK.poll().word);
+        }
+
+
+        return topFrequent;
+    }
+
+}
