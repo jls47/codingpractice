@@ -1128,4 +1128,116 @@ class Solution {
         return topFrequent;
     }
 
+
+
+}
+
+//Quick Singly Linked List implementation.
+
+class ListNode {
+    public int val;
+    public ListNode next;
+    private ListNode cur;
+
+    public ListNode(int x) {
+        val = x;
+    }
+
+    public ListNode(int x, ListNode z) {
+        val =x;
+        next = z;
+    }
+}
+
+class MyLinkedList {
+
+    private ListNode head;
+    private ListNode cur;
+
+
+    public MyLinkedList() {
+        head = null;
+        cur = null;
+    }
+    
+    public int get(int index) {
+        if(head == null || index < 0) {
+            return -1;
+        }
+        cur = head;
+        return find(index);
+    }
+
+    private int find(int index) {
+        if(cur == null) {
+            cur = head;
+            return -1;
+        }
+        if(index == 0) {
+            int z = cur.val;
+            cur = head;
+            return z;
+        }
+        cur = cur.next;
+        return find(index - 1);
+    }
+    
+    public void addAtHead(int val) {
+        cur = new ListNode(val, head);
+        head = cur;
+    }
+    
+    public void addAtTail(int val) {
+        if(head == null) {
+            head = new ListNode(val);
+        } else {
+            while(cur.next != null) {
+                cur = cur.next;
+            }
+            cur.next = new ListNode(val);
+        }
+        cur = head;
+    }
+    
+    public void addAtIndex(int index, int val) {
+        if(index == 0) {
+            addAtHead(val);
+        } else if(index > 0 && head == null) {
+            return;
+        } else {
+            cur = head;
+            while(index > 1) {
+                if(cur == null) {
+                    return;
+                }
+                cur = cur.next;
+                index --;
+            }
+            if(cur != null) {
+                ListNode x = new ListNode(val, cur.next);
+                cur.next = x;
+            }
+        }
+    }
+    
+    public void deleteAtIndex(int index) {
+        if(index == 0) {
+            head = head.next;
+            cur = head;
+        } else if(index > 0 && head == null) {
+            return;
+        } else {
+            cur = head;
+            while(index > 1) {
+                if(cur == null) {
+                    return;
+                }
+                cur = cur.next;
+                index --;
+            }
+            if(cur != null && cur.next != null) {
+                cur.next = cur.next.next;
+            }
+        }
+    }
 }
