@@ -1240,4 +1240,34 @@ class MyLinkedList {
             }
         }
     }
+
+    //Swapping Linked List Nodes in pairs
+     //At each step, change this.next to this.next.next
+    //Then do intermediate.next = this.next.next
+    //Then this.next.next = intermediate
+    //Then move down 2 nodes
+    public ListNode swapPairs(ListNode head) {
+        if(head != null && head.next != null) {
+
+            ListNode temp = head.next;
+            
+            head.next = head.next.next;
+            temp.next = head;
+            head = temp;
+            doSwap(head.next);
+        }
+
+        return head;
+    }
+
+    private void doSwap(ListNode cur) {
+        if(cur != null && cur.next != null && cur.next.next != null) {
+            ListNode temp = cur.next;
+            cur.next = cur.next.next;
+            temp.next = cur.next.next;
+            cur.next.next = temp;
+            
+            doSwap(cur.next.next);
+        }
+    }
 }
